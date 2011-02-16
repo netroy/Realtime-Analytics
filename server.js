@@ -20,11 +20,11 @@ var server = http.createServer(function (req, res) {
 
   // Handle the beacon
   if(path === '/beacon'){
-    var ip = req.connection.remoteAddress;
-    var city = geoip.City.record_by_addr(geoData,ip);
+    var remoteIP = req.connection.remoteAddress;
+    var city = geoip.City.record_by_addr(geoData,remoteIP);
 
     var hitObj = {
-      "ip":ip,
+      "ip":remoteIP,
       "referer":req.headers.referer,
       "city":city
     };
