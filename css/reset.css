@@ -1,0 +1,80 @@
+/* ---------------------------
+   Reset default browser CSS. - Based on work by Eric Meyer
+   Rebuild the default browser styles. - Based on Blueprint CSS
+   ---------------------------*/
+html { -webkit-font-smoothing: antialiased; }
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0;border: 0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
+
+article, aside, figure, footer, header,hgroup, nav, section { display:block; }
+
+body{background:#fff;font:12px Arial,sans-serif; *font-size:small; *font:x-small; line-height:1.22;color:#111;}
+
+h1,h2,h3,h4,h5,h6{clear:both;font-weight: bold; text-rendering: optimizeLegibility;}
+ol, ul, nav ul {list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+:focus{outline:0;}
+
+a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:transparent;}
+ins{background-color:#ff9;color:#000;text-decoration:none;}
+mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold;}
+del{text-decoration:line-through;}
+abbr[title], dfn[title] {border-bottom:1px dotted #000;cursor:help;}
+hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0 1.5em 0;padding:0;background-color:#999;}
+input, select,textarea { font-size:99%; vertical-align:middle; line-height: 1.5;color:#333;}
+
+table{border-collapse:collapse;border-spacing:0;font-size:inherit; font:100%;}
+a img{border:none;}
+
+p{margin-bottom:1.5em;}
+ul{margin: 0 0 1.5em 2.5em;}
+ol{margin: 0 0 1.5em 2.5em;}
+ul{list-style:disc;}
+ol{list-style-type: decimal;}
+ol ol{list-style:upper-alpha;}
+ol ol ol{list-style:lower-roman;}
+ol ol ol ol{list-style:lower-alpha;}
+ul ul, ol ol, ul ol, ol ul{margin-bottom:0;}
+dl{margin:0 1.5em;}
+dt{font-weight: bold;}
+dd{margin-bottom: 1.5em;}
+strong{font-weight: bold;}
+cite, em, i{font-style: italic;}
+blockquote{margin: 0 3em;}
+blockquote em, blockquote i, blockquote cite{font-style: normal;}
+pre, code, kbd, samp{font: 11px Monaco, monospace;line-height: 1.5;margin-bottom: 1.5em;}
+abbr, acronym{border-bottom: 1px dotted #666;cursor: help;}
+ins{text-decoration: none;}
+sup,sub{height: 0;line-height: 1;vertical-align: baseline;position: relative;}
+sup {bottom: 1ex;}
+sub {top: .5ex;}
+img { width: auto; height: auto; }
+
+/*
+ * Setting Default font/line-height and stuff now
+ */
+body, input, textarea{font: 12px Arial,sans-serif;line-height:14px;}
+p, ul, ol, dd, pre {margin-bottom:2em;}
+pre, code {font:12px monospace,Monaco;line-height:14px;}
+
+/*
+ * iPhone Reset
+ */
+html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6{-webkit-text-size-adjust: none;}
+
+
+/*
+ * Custom Re-Init
+ */
+html,body{zoom:1;padding:0px;margin:0px;border:0 none;}
+.left{float:left;}
+.right{float:right;}
+.clear{clear:both;float:none;overflow:auto;}
+.center{text-align:center;}
+.georgia{font-family:georgia,sans-serif,'times new roman';}
+.verdana{font-family:verdana,tahoma,sans;}
+.liberation{font-family: 'Liberation Serif', LiberationSerif, 'Times New Roman', serif;}
+.red{color:red;}
+.green{color:green;}
+ul,ol{margin-bottom:1em;}
+

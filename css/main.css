@@ -1,0 +1,6 @@
+html,body{background-color:#222;color:#888;}
+header h1{color:#DDD;text-shadow:0 0 8px #444;font-size:32px;line-height:40px;margin:10px auto;}
+#container{}
+footer{font-size:10px;line-height:12px;text-shadow:0 0 4px #000;margin:10px auto;color:#666;}
+footer a{color:#057BAF;}
+
