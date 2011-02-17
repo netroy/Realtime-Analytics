@@ -36,8 +36,8 @@ var server = http.createServer(function (req, res) {
     res.end();
 
     // broadcast to all connected folks about the new beacon
+    hitObj.connection = JSON.stringify(req.headers);
     socket.broadcast(hitObj);
-    console.log(hitObj);
     return;
   }
 
