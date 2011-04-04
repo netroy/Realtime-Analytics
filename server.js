@@ -20,7 +20,7 @@ var server = http.createServer(function (req, res) {
 
   // Handle the beacon
   if(path === '/beacon'){
-    var remoteIP = req['x-forwarded-for']||req.connection.remoteAddress;
+    var remoteIP = req.headers['x-forwarded-for']||req.connection.remoteAddress;
     var city = geoip.City.record_by_addr(geoData,remoteIP);
 
     var hitObj = {
