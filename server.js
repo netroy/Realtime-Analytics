@@ -11,7 +11,12 @@ var mimeMap = {
   "svg":"image/svg+xml",
   "png":"image/png"
 };
-var hitMap = [{country:"IN","city":"Bangalore",loc:{"y":12.9833,"x":77.5833},referer:'http://netroy.in'}];
+var hitMap = [
+  {country:"IN",city:"Bangalore",loc:{"y":12.9833,"x":77.5833},referer:'http://netroy.in'},
+  {country:"US",city:"Mountain View",loc:{"x":-122.0574,"y":37.4192}},
+  {country:"IN",city:"Allahabad",loc:{"x":81.8500,"y":25.4500}},
+  {country:"AU",city:"Phillip",loc:{"x":149.1000,"y":-35.3500}}
+];
 const MAX_BACKLOG = 100;
 
 // Load Geodata
