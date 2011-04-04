@@ -11,7 +11,7 @@ var mimeMap = {
   "svg":"image/svg+xml",
   "png":"image/png"
 };
-var hitMap = [{"ip":"203.83.248.32","city":{"country_code":"IN","country_code3":"IND","country_name":"India","continet_code":"AS","region":"19","city":"Bangalore","postal_code":"","latitude":12.9833,"longitude":77.5833}}]
+var hitMap = [{country:"IN","city":"Bangalore",loc:{"y":12.9833,"x":77.5833},referer:'http://netroy.in'}];
 const MAX_BACKLOG = 100;
 
 // Load Geodata
