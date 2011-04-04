@@ -2,7 +2,7 @@ html,body{background-color:#222;color:#888;}
 header h1{color:#AAA;text-shadow:0 0 8px #000;font-size:36px;line-height:40px;margin:20px auto;}
 
 #container{position:relative;width:900px;height:450px;margin:10px auto;border-radius:5px;border:1px solid #444;box-shadow:0 0 2px #000;
-  background-color:#333;background-image:url('../images/map.png');}
+  background-color:#333;background-image:url('http://static.netroy.in/images/world-map.png');}
 #monitor{position:absolute;top:0;left:0;width:900px;height:450px;}
 
 footer{font-size:12px;line-height:12px;text-shadow:0 0 4px #000;margin:20px auto;color:#888;}

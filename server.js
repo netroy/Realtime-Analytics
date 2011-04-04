@@ -45,13 +45,15 @@ var server = http.createServer(function (req, res) {
   // looks like someone requested a file .. serve it if it exists
   var mime = mimeMap[path.substr(path.lastIndexOf(".")+1)];
   var encoding = (!!mime && !!mime.match(/^image\//))?'binary':'utf8';
-  fs.readFile(__dirname + path, encoding, function(err, data){
+  var file = __dirname + path;
+  fs.readFile(file, encoding, function(err, data){
     if(err){
       // looks like file doesn't exist .. 404
       res.writeHead(404);
       res.write('404 - "'+path+'" Not Found');
     }else{
-      res.writeHead(200, {'Content-Type': (!mime)?'text/plain':mime});
+      var stats = fs.statSync(file);
+      res.writeHead(200, {'Content-Type': (!mime)?'text/plain':mime,'Content-length': stats.size});
       res.write(data, encoding);
     }
     res.end();
