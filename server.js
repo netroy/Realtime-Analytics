@@ -7,7 +7,8 @@ var geoip = require('geoip');
 var mimeMap = {
   "html":"text/html",
   "css":"text/css",
-  "js":"application/javascript"
+  "js":"application/javascript",
+  "svg":"image/svg+xml"
 };
 var hitMap = []
 
