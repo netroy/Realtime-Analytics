@@ -3,8 +3,6 @@ window.requestAnimFrame = (function(w){return w.requestAnimationFrame || w.webki
 (function(document,undefined){
   var canvas = document.getElementById("monitor");
   var context = canvas.getContext('2d');
-  context.fillStyle = "black";
-window.ctx = context;
   var queue = [];
 
   var socket = new io.Socket(null, {port: location.port, rememberTransport: false});
@@ -19,11 +17,12 @@ window.ctx = context;
   });
   socket.connect();
 
+window.ctx = context;
   function ping(x,y){
     context.save();
     var grad = context.createRadialGradient(x,y,0,x,y,5);
-    grad.addColorStop(0, 'rgba(0,0,0,0.3)');
-    grad.addColorStop(0.6, '#AAA');
+    grad.addColorStop(0, 'rgba(0,0,0,0.5)');
+    grad.addColorStop(0.6, 'rgba(80,80,80,0.4)');
     context.fillStyle = grad;
     context.beginPath();
     context.arc(x,y,5,0,Math.PI*2,false);
@@ -37,5 +36,5 @@ window.ctx = context;
     var x = Math.floor(((hit.loc.x + 170) * 900) / 360);
     var y = Math.floor(((90 - hit.loc.y) * 456) / 180);
     ping(x,y);
-  },200);
+  },2000);
 })(document);
