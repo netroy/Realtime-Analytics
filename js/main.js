@@ -1,4 +1,4 @@
-{function(document,undefined){
+(function(document,undefined){
   var canvas = document.getElementById("monitor");
   var context = canvas.getContext('2d');
   var queue = [];
