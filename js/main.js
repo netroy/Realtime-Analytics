@@ -36,5 +36,5 @@ window.ctx = context;
     var x = Math.floor(((hit.loc.x + 170) * 900) / 360);
     var y = Math.floor(((90 - hit.loc.y) * 456) / 180);
     ping(x,y);
-  },2000);
+  },100);
 })(document);
