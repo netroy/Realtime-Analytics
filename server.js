@@ -8,7 +8,8 @@ var mimeMap = {
   "html":"text/html",
   "css":"text/css",
   "js":"application/javascript",
-  "svg":"image/svg+xml"
+  "svg":"image/svg+xml",
+  "png":"image/png"
 };
 var hitMap = []
 
@@ -42,16 +43,17 @@ var server = http.createServer(function (req, res) {
     return;
   }
 
-  // looks like someone requested a file .. server it if it exists
-  fs.readFile(__dirname + path, 'utf8', function(err, data){
+  // looks like someone requested a file .. serve it if it exists
+  var mime = mimeMap[path.substr(path.lastIndexOf(".")+1)];
+  var encoding = (!!mime && !!mime.match(/^image\//))?'binary':'utf8';
+  fs.readFile(__dirname + path, encoding, function(err, data){
     if(err){
       // looks like file doesn't exist .. 404
       res.writeHead(404);
       res.write('404 - "'+path+'" Not Found');
     }else{
-      mime = mimeMap[path.substr(path.lastIndexOf(".")+1)];
       res.writeHead(200, {'Content-Type': (!mime)?'text/plain':mime});
-      res.write(data, 'utf8');
+      res.write(data, encoding);
     }
     res.end();
   });

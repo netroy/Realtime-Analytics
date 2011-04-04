@@ -1,5 +1,9 @@
 html,body{background-color:#222;color:#888;}
-header h1{color:#888;text-shadow:0 0 8px #222;font-size:32px;line-height:40px;margin:10px auto;}
-#container{position:relative;width:800px;height:400px;margin:10px auto;border-radius:5px;border:1px solid #444;background-color:#333;box-shadow:0 0 2px #000;}
-footer{font-size:10px;line-height:12px;text-shadow:0 0 4px #000;margin:10px auto;color:#666;}
+header h1{color:#AAA;text-shadow:0 0 8px #000;font-size:36px;line-height:40px;margin:20px auto;}
+
+#container{position:relative;width:900px;height:450px;margin:10px auto;border-radius:5px;border:1px solid #444;box-shadow:0 0 2px #000;
+  background-color:#333;background-image:url('../images/map.png');}
+
+
+footer{font-size:12px;line-height:12px;text-shadow:0 0 4px #000;margin:20px auto;color:#888;}
 footer a{color:#057BAF;}
