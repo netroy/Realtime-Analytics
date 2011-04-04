@@ -11,7 +11,7 @@ var mimeMap = {
   "svg":"image/svg+xml",
   "png":"image/png"
 };
-var hitMap = []
+var hitMap = [{"ip":"203.83.248.32","city":{"country_code":"IN","country_code3":"IND","country_name":"India","continet_code":"AS","region":"19","city":"Bangalore","postal_code":"","latitude":12.9833,"longitude":77.5833}}]
 const MAX_BACKLOG = 100;
 
 // Load Geodata
@@ -25,23 +25,20 @@ var server = http.createServer(function (req, res) {
   if(path === '/beacon'){
     var remoteIP = req.headers['x-forwarded-for']||req.connection.remoteAddress;
     var city = geoip.City.record_by_addr(geoData,remoteIP);
-
-    var hitObj = {
-      "ip":remoteIP,
-      "referer":req.headers.referer,
-      "city":city
-    };
-    hitMap.push(hitObj);
-
+    if(!!city){
+      var hitObj = {
+        "loc":{y:city.latitude,x:city.longitude},
+        "country":city.country_code,
+        "referer":req.headers.referer
+      };
+      hitMap.push(hitObj);
+      if(hitMap.length > MAX_BACKLOG) hitMap.shift();
+      // broadcast to all connected folks about the new beacon
+      socket.broadcast(hitObj);
+    }
     // return blank response for beacon
-    if(hitMap.length > MAX_BACKLOG) hitMap.shift();
     res.writeHead(200);
     res.end();
-
-    // broadcast to all connected folks about the new beacon
-    // hitObj.connection = JSON.stringify(req.headers);
-    socket.broadcast(hitObj);
-console.log(JSON.stringify(hitObj));
     return;
   }
 
