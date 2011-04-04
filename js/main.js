@@ -21,8 +21,8 @@ window.ctx = context;
   function ping(x,y){
     context.save();
     var grad = context.createRadialGradient(x,y,0,x,y,5);
-    grad.addColorStop(0, 'rgba(0,0,0,0.5)');
-    grad.addColorStop(0.6, 'rgba(80,80,80,0.4)');
+    grad.addColorStop(0, 'rgba(0,0,0,0.6)');
+    grad.addColorStop(0.75, 'rgba(60,60,60,0.3)');
     context.fillStyle = grad;
     context.beginPath();
     context.arc(x,y,5,0,Math.PI*2,false);

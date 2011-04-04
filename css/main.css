@@ -1,14 +1,14 @@
-html,body{min-height:100%;color:#888;
-  background:-webkit-gradient(radial, 50% 0%, 0, 50% 0%, 900, from(#444), to(#111)) no-repeat #111;
-  background:-moz-radial-gradient(center, #444, #111) no-repeat #111;
+html,body{min-height:100%;color:#888;background-color:#333;
+  background-image:-webkit-gradient(radial, 50% 0%, 0, 50% 0%, 900, from(#444), to(#222));
+  background-image:-moz-radial-gradient(center, #444, #222);
+  bakground-repeat:no-repeat;
   background-position:middle left;
   font-size:12px;line-height:20px;
 }
 a{text-decoration:none;color:#057BAF;}
-header h1{/*color:#AAA;text-shadow:0 0 8px #000;*/color:#000;text-shadow:0 1px 1px #666;font-size:48px;font-weight:normal;line-height:50px;margin:20px auto;}
+header h1{/*color:#AAA;text-shadow:0 0 8px #000;*/color:#000;text-shadow:0 1px 2px #777;font-size:48px;font-weight:normal;line-height:50px;margin:20px auto;font-family: 'Amaranth', georgia, arial, serif;}
 
-#container{position:relative;width:900px;height:456px;margin:20px auto;border-radius:8px;border:1px solid #000;box-shadow:0 0 4px #000;
-  background-color:#333;background-image:url('http://static.netroy.in/images/world-map.png');}
-#monitor{position:absolute;top:0;left:0;width:900px;height:456px;}
+#container{position:relative;width:904px;height:460px;margin:20px auto 50px auto;border-radius:8px;border:1px solid #000;box-shadow:0 5px 20px #000;background-color:#FFF;}
+#monitor{position:absolute;top:0;left:0;margin:2px;border-radius:5px;width:900px;height:456px;background-color:#FFF;background-image:url('http://static.netroy.in/images/world-map.png');background-repeat:no-repeat;}
 
-footer{line-height:24px;text-shadow:0 0 4px #000;margin:30px auto;color:#666;}
+footer{line-height:24px;text-shadow:0 0 3px #000;margin:30px auto;color:#777;}
