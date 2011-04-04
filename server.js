@@ -12,6 +12,7 @@ var mimeMap = {
   "png":"image/png"
 };
 var hitMap = []
+const MAX_BACKLOG = 100;
 
 // Load Geodata
 var geoData = geoip.open(__dirname + '/data/GeoLiteCity.dat');
@@ -33,12 +34,12 @@ var server = http.createServer(function (req, res) {
     hitMap.push(hitObj);
 
     // return blank response for beacon
-    if(hitMap.length > 10) hitMap.shift();
+    if(hitMap.length > MAX_BACKLOG) hitMap.shift();
     res.writeHead(200);
     res.end();
 
     // broadcast to all connected folks about the new beacon
-    hitObj.connection = JSON.stringify(req.headers);
+    // hitObj.connection = JSON.stringify(req.headers);
     socket.broadcast(hitObj);
     return;
   }
@@ -64,17 +65,5 @@ server.listen(8586);
 var socket = io.listen(server);
 socket.on('connection', function(client){
   client.send({ "backlog": hitMap });
-/*
-  //client.broadcast({announcement: client.sessionId + ' connected'});
-
-  client.on('message', function(message){
-    var msg = { message: [client.sessionId, message] };
-    client.broadcast(msg);
-  });
-
-  client.on('disconnect', function(){
-    //client.broadcast({ announcement: client.sessionId + ' disconnected' })
-  });
-*/
 });
 
