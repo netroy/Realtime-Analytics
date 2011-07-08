@@ -5,7 +5,8 @@ window.requestAnimFrame = (function(w){return w.requestAnimationFrame || w.webki
   var context = canvas.getContext('2d');
   var queue = [];
 
-  var socket = new io.Socket(null, {port: location.port, rememberTransport: false});
+  //var socket = new io.Socket(null, {port: location.port, rememberTransport: false});
+  var socket = new io.connect();
   socket.on('message', function(message){
     if('backlog' in message){
       for(var msg in message.backlog){
@@ -15,7 +16,6 @@ window.requestAnimFrame = (function(w){return w.requestAnimationFrame || w.webki
       queue.push(message);
     }
   });
-  socket.connect();
 
 window.ctx = context;
   function ping(x,y){

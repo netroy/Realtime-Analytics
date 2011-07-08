@@ -20,7 +20,7 @@ hits.push({country:"AU",city:"Phillip",loc:{"x":149.1000,"y":-35.3500}});
 const MAX_BACKLOG = 100;
 
 // Load Geodata
-var geoData = geoip.open(__dirname + '/data/GeoLiteCity.dat');
+var geoData = new geoip.City(__dirname + '/data/GeoLiteCity.dat');
 
 var server = http.createServer(function (req, res) {
   var path = url.parse(req.url).pathname;
@@ -29,17 +29,18 @@ var server = http.createServer(function (req, res) {
   // Handle the beacon
   if(path === '/beacon'){
     var remoteIP = req.headers['x-forwarded-for']||req.connection.remoteAddress;
-    var city = geoip.City.record_by_addr(geoData,remoteIP);
+    var city = geoData.lookupSync(remoteIP);
     if(!!city){
       var hitObj = {
         "loc":{y:city.latitude,x:city.longitude},
         "country":city.country_code,
-        "referer":req.headers.referer
+        "referer":req.headers.referer,
+        "city":city.city || ""
       };
       hits.push(hitObj);
       if(hits.length > MAX_BACKLOG) hits.shift();
       // broadcast to all connected folks about the new beacon
-      socket.broadcast(hitObj);
+      io.sockets.json.send(hitObj);
     }
     // return blank response for beacon
     res.writeHead(200);
@@ -58,7 +59,7 @@ var server = http.createServer(function (req, res) {
       res.write('404 - "'+path+'" Not Found');
     }else{
       var stats = fs.statSync(file);
-      res.writeHead(200, {'Content-Type': (!mime)?'text/plain':mime,'Content-length': stats.size});
+      res.writeHead(200, {'Content-Type': (!mime)?'text/plain':mime,'Content-length': stats.size, 'Cache-Control': 'max-age=157852800000'});
       res.write(data, encoding);
     }
     res.end();
@@ -67,8 +68,9 @@ var server = http.createServer(function (req, res) {
 server.listen(8586);
 
 // Time to create a websocket listener for the server
-var socket = io.listen(server);
-socket.on('connection', function(client){
-  client.send({ "backlog": hits });
+io = io.listen(server);
+io.set('log level', 0);
+io.sockets.on('connection', function(client){
+  client.json.send({ "backlog": hits });
 });
 
