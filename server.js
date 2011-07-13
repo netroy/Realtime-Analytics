@@ -1,4 +1,5 @@
-var    http = require('http'),
+var express = require('express'),
+        app = module.exports = express.createServer(),
          io = require('socket.io'),
          fs = require('fs'),
         url = require('url'),
@@ -7,72 +8,63 @@ CouchClient = require('couch-client'),
  connection = CouchClient("http://analytics:realtimeAnalytics@netroy.iriscouch.com/analytics"),
       docId = "backlog";
 
-var mimeMap = {
-  "html":"text/html",
-  "css":"text/css",
-  "js":"application/javascript",
-  "svg":"image/svg+xml",
-  "png":"image/png"
-};
 var hits = [];
 const MAX_BACKLOG = 200;
 
 // Load Geodata
 var geoData = geoip.open(__dirname + '/data/GeoLiteCity.dat');
 
-var server = http.createServer(function (req, res) {
-  var path = url.parse(req.url).pathname;
-  if(path === '/') path='/index.html';
-
-  // Handle the beacon
-  if(path === '/beacon'){
-    var remoteIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    var city = geoip.City.record_by_addr(geoData,remoteIP);
-    if(!!city){
-      var hitObj = {
-        "ip": remoteIP,
-        "loc": {
-          "y": city.latitude,
-          "x": city.longitude
-        },
-        "country": city.country_code,
-        "city": city.city || "",
-        "referer": req.headers.referer,
-        "time": (new Date()).getTime()
-      };
-      hits.push(hitObj);
-      if(hits.length > MAX_BACKLOG) hits.shift();
-      // broadcast to all connected folks about the new beacon
-      io.sockets.json.send(hitObj);
-    }
-    // return blank response for beacon
-    res.writeHead(200);
-    res.end();
-    return;
-  }
-
-  // looks like someone requested a file .. serve it if it exists
-  var mime = mimeMap[path.substr(path.lastIndexOf(".")+1)];
-  var encoding = (!!mime && !!mime.match(/^image\//))?'binary':'utf8';
-  var file = __dirname + path;
-  fs.readFile(file, encoding, function(err, data){
-    if(err){
-      // looks like file doesn't exist .. 404
-      res.writeHead(404);
-      res.write('404 - "'+path+'" Not Found');
-    }else{
-      var stats = fs.statSync(file);
-      res.writeHead(200, {'Content-Type': (!mime)?'text/plain':mime,'Content-length': stats.size, 'Cache-Control': 'max-age=157852800000'});
-      res.write(data, encoding);
-    }
-    res.end();
-  });
+app.configure(function(){
+  app.use(express.bodyParser());
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
 });
-server.listen(8586);
+
+// Define the main route
+app.get('/', function(req, resp){
+  resp.redirect("/index.html");
+});
+
+app.get('/beacon', function(req, resp){
+  var remoteIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  var city = geoip.City.record_by_addr(geoData,remoteIP);
+  if(!!city){
+    var hitObj = {
+      "ip": remoteIP,
+      "loc": {
+        "y": city.latitude,
+        "x": city.longitude
+      },
+      "country": city.country_code,
+      "city": city.city || "",
+      "referer": req.headers.referer,
+      "time": (new Date()).getTime()
+    };
+    hits.push(hitObj);
+    if(hits.length > MAX_BACKLOG) hits.shift();
+    // broadcast to all connected folks about the new beacon
+    io.sockets.json.send(hitObj);
+    
+    // return blank response for beacon
+    resp.writeHead(200, {"Content-type": "text/plain"});
+    resp.end(" ");
+  }
+});
+
+// Catch all route
+app.use(function(eq, resp){
+  resp.redirect("/");
+});
+
+// prevent server from starting as module - can be used with something like multinode
+if (!module.parent) {
+  app.listen(8586);
+  console.info("Started on port %d", app.address().port);
+}
 
 // Time to create a websocket listener for the server
-io = io.listen(server);
-io.set('log level', 0);
+io = io.listen(app);
+io.set('log level', 1);
 io.sockets.on('connection', function(client){
   client.json.send({ "backlog": hits });
 });
