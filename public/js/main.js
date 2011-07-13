@@ -9,15 +9,15 @@ window.requestAnimFrame = (function(w){return w.requestAnimationFrame || w.webki
   var socket = new io.connect();
   socket.on('message', function(message){
     if('backlog' in message){
-      for(var msg in message.backlog){
-        queue.push(message.backlog[msg]);
+      for(var i=0, l=message.backlog.length; i<l; i++){
+        queue.push(message.backlog[i]);
       }
     }else{
       queue.push(message);
     }
   });
 
-window.ctx = context;
+  //window.ctx = context;
   function ping(x,y){
     context.save();
     var grad = context.createRadialGradient(x,y,0,x,y,5);
@@ -30,9 +30,12 @@ window.ctx = context;
     context.restore();
   }
 
+  var last = 0;
   setInterval(function(){
     if(queue.length == 0) return;
     var hit = queue.shift();
+    if(hit.time <= last) return;
+    last = hit.time;
     var x = Math.floor(((hit.loc.x + 170) * 900) / 360);
     var y = Math.floor(((90 - hit.loc.y) * 456) / 180);
     ping(x,y);
