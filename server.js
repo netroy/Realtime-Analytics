@@ -1,3 +1,8 @@
+if(typeof process.env.IRISCOUCH_CONN_INFO === 'undefined'){
+  console.error("need couchdb connection info in IRISCOUCH_CONN_INFO");
+  process.exit(-1);
+}
+
 var express = require('express'),
         app = module.exports = express.createServer(),
          io = require('socket.io'),
@@ -5,7 +10,7 @@ var express = require('express'),
         url = require('url'),
       geoip = require('geoip'),
 CouchClient = require('couch-client'),
- connection = CouchClient("http://analytics:realtimeAnalytics@netroy.iriscouch.com/analytics"),
+ connection = CouchClient(process.env.IRISCOUCH_CONN_INFO),
       docId = "backlog";
 
 var hits = [];
